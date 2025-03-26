@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define NUM_CARTAS 6
+#define NUM_ATRIBUTOS 3
+
+typedef struct {
+    char nome[20];
+    int atributos[NUM_ATRIBUTOS];
+} Carta;
+
+void criarCartas(Carta baralho[NUM_CARTAS]) {
+    for (int i = 0; i < NUM_CARTAS; i++) {
+        snprintf(baralho[i].nome, sizeof(baralho[i].nome), "Carta %d", i + 1);
+        for (int j = 0; j < NUM_ATRIBUTOS; j++) {
+            baralho[i].atributos[j] = rand() % 100 + 1;
+        }
+    }
+}
+
+void exibirCarta(Carta c) {
+    printf("%s - Força: %d, Velocidade: %d, Inteligência: %d\n", 
+        c.nome, c.atributos[0], c.atributos[1], c.atributos[2]);
+}
+
+int main() {
+    srand(time(NULL));
+    Carta baralho[NUM_CARTAS];
+    criarCartas(baralho);
+
+    printf("Cartas do jogador 1:\n");
+    for (int i = 0; i < NUM_CARTAS; i += 2) exibirCarta(baralho[i]);
+
+    printf("\nCartas do jogador 2:\n");
+    for (int i = 1; i < NUM_CARTAS; i += 2) exibirCarta(baralho[i]);
+
+    return 0;
+}
